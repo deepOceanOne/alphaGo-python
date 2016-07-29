@@ -4,3 +4,4 @@ we would need
 ------
 
 *  one audio analysis, download and extract lib. 
+*  one big database support.  super big.  using mongodb. 

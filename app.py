@@ -42,7 +42,6 @@ def news():
         new_items = dom.xpath('//tr/td/a/text()')
         new_urls = dom.xpath('//tr/td/a/@href')
         for item in new_items:
-            item = item.encode("utf-8")
             news.append(item)
     return render_template('news.html',news=news)
 

@@ -9,7 +9,6 @@ from flask_sockets import Sockets
 from views.todos import todos_view
 
 app = Flask(__name__)
-sockets = Sockets(app)
 
 # 动态路由
 app.register_blueprint(todos_view, url_prefix='/todos')
@@ -25,8 +24,3 @@ def time():
     return str(datetime.now())
 
 
-@sockets.route('/echo')
-def echo_socket(ws):
-    while True:
-        message = ws.receive()
-        ws.send(message)

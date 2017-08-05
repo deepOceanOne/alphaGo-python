@@ -13,6 +13,7 @@ import sys
 import urllib2
 import requests
 import re
+import random
 from lxml import etree
 
 app = Flask(__name__)
@@ -43,6 +44,7 @@ def news():
         new_urls = dom.xpath('//tr/td/a/@href')
         for item in new_items:
             news.append(item)
+    news = random.sample(news,10)
     return render_template('news.html',news=news)
 
 

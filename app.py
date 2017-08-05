@@ -35,19 +35,5 @@ def music():
     return str("http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3")
 
 
-@app.route('/news')
-def news():
-    url = "http://news.163.com/rank/"
-    myPage = requests.get(url).content.decode("gbk")
-    myPageResults =  re.findall(r'<div class="titleBar" id=".*?"><h2>(.*?)</h2><div class="more"><a href="(.*?)">.*?</a></div></div>', myPage, re.S)
-    news = []
-    for item, url in myPageResults:
-        new_page = requests.get(url).content.decode("gbk")
-        dom = etree.HTML(new_page)
-        new_items = dom.xpath('//tr/td/a/text()')
-        new_urls = dom.xpath('//tr/td/a/@href')
-        for item in new_items:
-            news.append(item)
-    return render_template('news.html',news=news)
 
 

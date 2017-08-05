@@ -10,6 +10,8 @@ https://github.com/sintrb/Bmob-Py
 import json
 import copy
 from HttpHolder import HttpHolder, urlencode
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class BmobSDK(object):
 	'''

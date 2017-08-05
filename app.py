@@ -30,6 +30,11 @@ def index():
 def time():
     return str(datetime.now())
 
+@app.route('/music')
+def music():
+    return str("http://sc1.111ttt.com/2016/1/11/02/204021112113.mp3")
+
+
 @app.route('/news')
 def news():
     url = "http://news.163.com/rank/"

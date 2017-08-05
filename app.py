@@ -24,3 +24,6 @@ def time():
     return str(datetime.now())
 
 
+@app.route('/news')
+def time():
+    return "news"

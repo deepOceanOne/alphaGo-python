@@ -19,7 +19,7 @@ class BmobSDK(object):
 	BmobSDK, create with Application ID and REST API Key. You can use she same Application with BmobSDK.setup() method.
 	'''
 	context = None
-	def __init__(self, appid, restkey, apiurl='https://api.bmob.cn/1/classes/news'):
+	def __init__(self, appid, restkey, apiurl='https://api.bmob.cn/1/classes'):
 		super(BmobSDK, self).__init__()
 		self.appid = appid
 		self.restkey = restkey

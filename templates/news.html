@@ -6,8 +6,16 @@
   </head>
   <body>
     {% for new in news %} 
-    <a> title：{{new}} </a>
+    <a> {{new}} </a>
     <br>
     {% endfor %} 
+
+     <script type="text/javascript">
+     		 {% for new in news %} 
+			    alert(new);
+			 {% endfor %} 
+     </script>
+
   </body> 
+
 </html>

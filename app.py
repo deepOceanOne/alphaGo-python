@@ -23,3 +23,6 @@ def index():
 def time():
     return str(datetime.now())
 
+@app.route('/news')
+def news():
+    return str("news")

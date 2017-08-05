@@ -4,7 +4,6 @@ from datetime import datetime
 
 from flask import Flask
 from flask import render_template
-from flask_sockets import Sockets
 
 from views.todos import todos_view
 
@@ -25,5 +24,5 @@ def time():
 
 
 @app.route('/news')
-def time():
+def news():
     return "news"

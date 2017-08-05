@@ -30,7 +30,7 @@ def index():
 def time():
     return str(datetime.now())
 
-@app.route('/music')
+@app.route('/music.mp3')
 def music():
     return requests.get("http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3")
 

@@ -4,16 +4,8 @@
     <title>Welcome to news!</title>
     <link rel="stylesheet" href="/static/style.css" type="text/css">
   </head>
-     <script type="text/javascript">
-     {% for new in news %} 
-	    
-	    alert(new);
-	    
-     {% endfor %} 
-     		
-     </script>
-
   <body>
+
     {% for new in news %} 
     <a> {{new}} </a>
     <br>

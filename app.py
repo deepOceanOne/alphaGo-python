@@ -16,6 +16,18 @@ import re
 import random
 from lxml import etree
 
+from Bmob import BmobSDK,BmobModel
+
+# define a Model 
+class New(BmobModel):
+    title = '' # title 
+
+# setup BmobSDK
+BmobSDK.setup(os.environ['bmobappid'],os.environ['bmobappkey'])    
+
+
+# end of Bmob thing 
+
 app = Flask(__name__)
 
 # 动态路由
@@ -45,6 +57,11 @@ def news():
         for item in new_items:
             news.append(item)
     news = random.sample(news,10)
+    for new in news :
+        # do bmob operation 
+        piece = New(title=new)
+        piece.save()
     return render_template('news.html',news=news)
+
 
 

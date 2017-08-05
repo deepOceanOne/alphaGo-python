@@ -44,6 +44,6 @@ def news():
         for item in new_items:
             item = item.encode("utf-8")
             news.append(item)
-    return render_template('index.html',news=news)
+    return render_template('news.html',news=news)
 
 

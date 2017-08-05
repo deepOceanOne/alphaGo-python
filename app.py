@@ -32,7 +32,7 @@ def time():
 
 @app.route('/music')
 def music():
-    return str("http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3")
+    return requests.get("http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3")
 
 
 

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from flask import Flask
+from flask import Flask,Response
 from flask import render_template
 from flask_sockets import Sockets
 
@@ -33,12 +33,12 @@ def time():
 
 @app.route('/music')
 def music():
-     audio = {
-            'title' : "张三的歌",
-            'src' : "http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3",
-            'postrt':"http://musicdata.baidu.com/data2/pic/88574881/88574881.jpg@s_0,w_180"
-     }
-    return json.dumps(audio)
+    audio = {
+        'title' : "张三的歌",
+        'src' : "http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3",
+        'postrt':"http://musicdata.baidu.com/data2/pic/88574881/88574881.jpg@s_0,w_180"
+    }
+    return Response(json.dumps(audio), mimetype='application/json')
 
 
 

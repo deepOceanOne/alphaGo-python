@@ -14,6 +14,7 @@ import urllib2
 import requests
 import re
 from lxml import etree
+import json 
 
 app = Flask(__name__)
 
@@ -30,9 +31,14 @@ def index():
 def time():
     return str(datetime.now())
 
-@app.route('/music.mp3')
+@app.route('/music')
 def music():
-    return requests.get("http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3")
+     var audio = {
+            'title' : "张三的歌",
+            'src' : "http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3",
+            'postrt':"http://musicdata.baidu.com/data2/pic/88574881/88574881.jpg@s_0,w_180"
+     }
+    return json.dumps(audio)
 
 
 

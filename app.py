@@ -33,7 +33,7 @@ def time():
 
 @app.route('/music')
 def music():
-     var audio = {
+     audio = {
             'title' : "张三的歌",
             'src' : "http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3",
             'postrt':"http://musicdata.baidu.com/data2/pic/88574881/88574881.jpg@s_0,w_180"

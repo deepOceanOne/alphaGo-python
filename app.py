@@ -38,7 +38,7 @@ def music():
     # audio src to be pushed ... 
     audio = {
         'name' : "Around the world",
-        'singer':"Aqua",
+        'author':"Aqua",
         'src' : "http://ws.stream.qqmusic.qq.com/C100000Q26PX3Xz8EP.m4a?fromtag=38",
         'poster':"http://musicdata.baidu.com/data2/pic/64166dae89016b79f97e033b7d71e174/326548014/326548014.jpg@s_0,w_180"
     }

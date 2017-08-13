@@ -4,6 +4,7 @@ from datetime import datetime
 
 from flask import Flask,Response
 from flask import render_template
+from flask import request, make_response
 from flask_sockets import Sockets
 
 from views.todos import todos_view
@@ -33,6 +34,8 @@ def time():
 
 @app.route('/music')
 def music():
+    
+    # audio src to be pushed ... 
     audio = {
         'name' : "张三的歌",
         'author':"张子石",
@@ -41,6 +44,17 @@ def music():
     }
     return Response(json.dumps(audio), mimetype='application/json')
 
+@app.route('/search')
+def search():
+    import urllib
+    url_string = request.url.split("url=")[1] # Hackish; but works if the requested URL contains query params
+    print 'url string is : '+urllib.unquote(url_string)
+    try:
+        page = urllib.urlopen(urllib.unquote(url_string))
+        html = page.read()
+        return html
+    except Exception, e :
+        return e 
 
 
 

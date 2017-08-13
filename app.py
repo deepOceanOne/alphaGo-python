@@ -37,10 +37,10 @@ def music():
     
     # audio src to be pushed ... 
     audio = {
-        'name' : "张三的歌",
-        'author':"张子石",
-        'src' : "http://www.tingge123.com/mp3/2016-04-22/1461291711.mp3",
-        'poster':"http://musicdata.baidu.com/data2/pic/88574881/88574881.jpg@s_0,w_180"
+        'name' : "Around the world",
+        'singer':"Aqua",
+        'src' : "http://ws.stream.qqmusic.qq.com/C100000Q26PX3Xz8EP.m4a?fromtag=38",
+        'poster':"http://musicdata.baidu.com/data2/pic/64166dae89016b79f97e033b7d71e174/326548014/326548014.jpg@s_0,w_180"
     }
     return Response(json.dumps(audio), mimetype='application/json')
 

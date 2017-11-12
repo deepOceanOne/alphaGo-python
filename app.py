@@ -95,14 +95,6 @@ def ajax_post_cut():
                            src=tts_cut.encode('utf-8'),
                            cut=tts_cut.encode('utf-8'))
 
-@app.route('/')
-def index():
-    """
-    默认处理方法
-    :return:
-    """
-    return render_template('seg.html', r=R[0], f=F[0], R=R, F=F,
-                           src=cut(EXAMPLE), cut=cut(EXAMPLE))
 
 # end of text-to-speech
 

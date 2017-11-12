@@ -25,11 +25,6 @@ app = Flask(__name__)
 app.register_blueprint(todos_view, url_prefix='/todos')
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/time')
 def time():
     return str(datetime.now())

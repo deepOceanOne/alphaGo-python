@@ -64,4 +64,12 @@ def news():
     return render_template('news.html',news=news)
 
 
+@app.route('/words')
+def words():
+    url = "https://api.guoch.xyz"
+    content = requests.get(url).content.decode("gbk")
+    words = []
+    words.append(content)
+    return render_template('news.html',news=words)
+
 

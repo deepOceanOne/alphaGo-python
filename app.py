@@ -66,8 +66,14 @@ def news():
 
 @app.route('/words')
 def words():
-    url = "http://api.guoch.xyz"
+    url = "https://api.guoch.xyz"
     words = []
+    for i in range(10,15):
+        content = requests.get(url).content
+        piece = New(title=content)
+        piece.save()
+        words.append(content)
+    url = "https://sslapi.hitokoto.cn/?c=f&encode=text"
     for i in range(10,15):
         content = requests.get(url).content
         piece = New(title=content)

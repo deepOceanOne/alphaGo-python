@@ -67,9 +67,12 @@ def news():
 @app.route('/words')
 def words():
     url = "http://api.guoch.xyz"
-    content = requests.get(url).content
     words = []
-    words.append(content)
+    for i in range(10,15):
+        content = requests.get(url).content
+        piece = New(title=content)
+        piece.save()
+        words.append(content)
     return render_template('news.html',news=words)
 
 

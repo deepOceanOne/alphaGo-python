@@ -66,7 +66,7 @@ def news():
 
 @app.route('/words')
 def words():
-    url = "https://api.guoch.xyz"
+    url = "http://api.guoch.xyz"
     content = requests.get(url).content.decode("gbk")
     words = []
     words.append(content)

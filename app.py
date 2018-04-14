@@ -81,4 +81,7 @@ def words():
         words.append(content)
     return render_template('news.html',news=words)
 
+# 新闻类榜单
+
+
 

@@ -5,6 +5,8 @@ from datetime import datetime
 from flask import Flask
 from flask import render_template
 from flask_sockets import Sockets
+# add request 
+from flask import request
 
 from views.todos import todos_view
 
@@ -69,8 +71,8 @@ def news():
 
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniutoken():
-	if requests.method == 'POST' :
-		recordFile = requests.files['file']
+	if request.method == 'POST' :
+		recordFile = request.files['file']
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'
 		key =  "firstRecord.silk"

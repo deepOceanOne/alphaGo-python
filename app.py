@@ -74,7 +74,7 @@ def qiniu():
 	if request.method == 'POST' :
 		recordFile = request.files['file']
 		key =  "firstRecord.silk"
-		f.save(os.path.join('./',key)) 
+		recordFile.save(os.path.join('./',key)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'
 		token = q.upload_token(bucket_name, key, 3600)

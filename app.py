@@ -17,6 +17,8 @@ import random
 from lxml import etree
 
 from Bmob import BmobSDK,BmobModel
+# add for qiniu storage 
+from qiniu import Auth
 
 # define a Model 
 class New(BmobModel):
@@ -62,6 +64,14 @@ def news():
         piece = New(title=new)
         piece.save()
     return render_template('news.html',news=news)
+
+
+@app.route('/qiniutoken')
+def qiniutoken():
+	q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
+	token = q.upload_token('file', 'first_record', 3600)
+	return token
+
 
 
 @app.route('/words')

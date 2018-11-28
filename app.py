@@ -77,7 +77,7 @@ def qiniutoken():
 		bucket_name = 'file'
 		key =  "firstRecord.silk"
 		token = q.upload_token(bucket_name, key, 3600)
-		ret, info = put_file(token, key, recordFile)
+		ret, info = put_file(token, key, recordFile.stream)
 		return ret
 
 

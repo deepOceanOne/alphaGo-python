@@ -20,7 +20,7 @@ from lxml import etree
 
 from Bmob import BmobSDK,BmobModel
 # add for qiniu storage 
-from qiniu import Auth, put_file, etag
+from qiniu import Auth, put_file, etag, put_stream, put_data
 import qiniu.config
 
 # define a Model 

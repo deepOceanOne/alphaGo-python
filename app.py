@@ -69,13 +69,14 @@ def news():
 
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniutoken():
-	recordFile = request.files['file']
-	q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
-	bucket_name = 'file'
-	key =  "firstRecord.silk"
-	token = q.upload_token(bucket_name, key, 3600)
-	ret, info = put_file(token, key, recordFile)
-	return ret
+	if request.method == 'POST' :
+		recordFile = request.files['file']
+		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
+		bucket_name = 'file'
+		key =  "firstRecord.silk"
+		token = q.upload_token(bucket_name, key, 3600)
+		ret, info = put_file(token, key, recordFile)
+		return ret
 
 
 @app.route('/words')

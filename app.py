@@ -77,9 +77,7 @@ def qiniu():
 		bucket_name = 'file'
 		key =  "firstRecord.silk"
 		token = q.upload_token(bucket_name, key, 3600)
-		ret, info = put_file(token, key, recordFile.read())
-		print(ret)
-		print(info)
+		ret, info = put_file(token, key, './TODO.md')
 		return info
 
 

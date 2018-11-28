@@ -18,7 +18,8 @@ from lxml import etree
 
 from Bmob import BmobSDK,BmobModel
 # add for qiniu storage 
-from qiniu import Auth
+from qiniu import Auth, put_file, etag
+import qiniu.config
 
 # define a Model 
 class New(BmobModel):
@@ -66,12 +67,15 @@ def news():
     return render_template('news.html',news=news)
 
 
-@app.route('/qiniutoken')
+@app.route('/qiniu',methods=['GET','POST'])
 def qiniutoken():
+	recordFile = requests.files['file']
 	q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
-	token = q.upload_token('file', 'first_record', 3600)
-	return token
-
+	bucket_name = 'file'
+	key =  "firstRecord.silk"
+	token = q.upload_token(bucket_name, key, 3600)
+	ret, info = put_file(token, key, recordFile)
+	return ret
 
 
 @app.route('/words')

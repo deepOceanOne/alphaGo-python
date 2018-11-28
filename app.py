@@ -69,7 +69,7 @@ def news():
 
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniutoken():
-	recordFile = requests.files['file']
+	recordFile = request.files['file']
 	q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 	bucket_name = 'file'
 	key =  "firstRecord.silk"

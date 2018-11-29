@@ -74,12 +74,12 @@ def qiniu():
 	if request.method == 'POST' :
         filename = request.form.get("filename")
 		recordFile = request.files['file']
-		key = filename
-		recordFile.save(os.path.join('./',key)) 
+		# key = filename
+		recordFile.save(os.path.join('./',filename)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'
-		token = q.upload_token(bucket_name, key, 3600)
-		ret, info = put_file(token, key, './'+key)
+		token = q.upload_token(bucket_name, filename, 3600)
+		ret, info = put_file(token, filename, './'+filename)
 		return info
 
 

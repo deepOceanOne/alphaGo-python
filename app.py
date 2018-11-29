@@ -72,14 +72,13 @@ def news():
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniu():
 	if request.method == 'POST' :
-        filename = request.form.get("filename")
 		recordFile = request.files['file']
-		# key = filename
-		recordFile.save(os.path.join('./',filename)) 
+		key = request.form.get("filename")
+		recordFile.save(os.path.join('./',key)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'
-		token = q.upload_token(bucket_name, filename, 3600)
-		ret, info = put_file(token, filename, './'+filename)
+		token = q.upload_token(bucket_name, key, 3600)
+		ret, info = put_file(token, key, './'+key)
 		return info
 
 

@@ -73,12 +73,12 @@ def news():
 def qiniu():
 	if request.method == 'POST' :
 		recordFile = request.files['file']
-		key = 'test2.silk'
-		recordFile.save(os.path.join('./',key)) 
+		key = 'test3.silk'
+		recordFile.save(os.path.join('./views/',key)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'
 		token = q.upload_token(bucket_name, key, 3600)
-		ret, info = put_file(token, key, './'+key)
+		ret, info = put_file(token, key, './views/'+key)
 		return str(datetime.now())
 
 

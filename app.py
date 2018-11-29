@@ -73,8 +73,7 @@ def news():
 def qiniu():
 	if request.method == 'POST' :
 		recordFile = request.files['file']
-		# key = request.form.get("filename")
-        key = 'test2.silk'
+		key = 'test2.silk'
 		recordFile.save(os.path.join('./',key)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'

@@ -79,7 +79,7 @@ def qiniu():
 		bucket_name = 'file'
 		token = q.upload_token(bucket_name, key, 3600)
 		ret, info = put_file(token, key, './'+key)
-		return info
+		return 200
 
 
 @app.route('/words')

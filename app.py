@@ -72,8 +72,9 @@ def news():
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniu():
 	if request.method == 'POST' :
+        filename = request.form.get("filename")
 		recordFile = request.files['file']
-		key =  "firstRecord.silk"
+		key = filename
 		recordFile.save(os.path.join('./',key)) 
 		q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
 		bucket_name = 'file'

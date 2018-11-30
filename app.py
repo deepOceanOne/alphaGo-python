@@ -69,6 +69,9 @@ def news():
     return render_template('news.html',news=news)
 
 
+# 这里使用七牛云进行录音的保存，但是七牛云存在一个问题： 没有公共域名可用。
+# 上传资源的下载必须使用 api 获取， 七牛的 qshell 工具的 qshell get 下载
+# 下载后的文件为 silk 文件，需要进行ffmpeg转码， 参考使用 https://github.com/kn007/silk-v3-decoder 进行转码 
 @app.route('/qiniu',methods=['GET','POST'])
 def qiniu():
 	if request.method == 'POST' :
@@ -80,6 +83,7 @@ def qiniu():
 		token = q.upload_token(bucket_name, key, 3600)
 		ret, info = put_file(token, key, './'+key)
 		return str(datetime.now())
+
 
 
 @app.route('/words')

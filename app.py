@@ -21,6 +21,7 @@ from lxml import etree
 from Bmob import BmobSDK,BmobModel
 # add for qiniu storage 
 from qiniu import Auth, put_file, etag, put_stream, put_data
+from qiniu import BucketManager
 import qiniu.config
 
 # define a Model 
@@ -83,6 +84,22 @@ def qiniu():
 		token = q.upload_token(bucket_name, key, 3600)
 		ret, info = put_file(token, key, './'+key)
 		return str(datetime.now())
+
+@app.route('/list')
+def list():
+    q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
+    bucket = BucketManager(q)
+    bucket_name = 'travel'
+    prefix = None
+    limit = 200
+    delimiter = None
+    marker = None
+    ret, eof, info = bucket.list(bucket_name, prefix, marker, limit, delimiter)
+    ret_str = ''
+    for i in ret['items']:
+        ret_str += i['key']
+        ret_str += '\n'
+    return ret_str
 
 
 

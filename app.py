@@ -124,8 +124,10 @@ def words():
 @app.route('/cz',methods=['GET','POST'])   # 常在 应用逻辑
 def cz():
     if request.method == 'POST' :
-        return {"text":"Hello, everything fine,Good night. zzz"}
-    return {"text":"Hello, only Get get ,Good night. zzz"}    
+        r = {}
+        r['text'] = "Hello, everything fine,Good night. zzz";
+        return json.dumps(r,ensure_ascii=False)
+    return json.dumps(r,ensure_ascii=False)  
 
 # 新闻类榜单
 

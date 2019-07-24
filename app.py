@@ -120,6 +120,12 @@ def words():
         words.append(content)
     return render_template('news.html',news=words)
 
+
+@app.route('/cz')   # 常在 应用逻辑
+def qiniu():
+    if request.method == 'POST' :
+        return str("Hello from far away.")
+
 # 新闻类榜单
 
 

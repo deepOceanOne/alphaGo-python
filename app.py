@@ -122,7 +122,7 @@ def words():
 
 
 @app.route('/cz')   # 常在 应用逻辑
-def qiniu():
+def cz():
     if request.method == 'POST' :
         return str("Hello from far away.")
 

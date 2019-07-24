@@ -121,10 +121,11 @@ def words():
     return render_template('news.html',news=words)
 
 
-@app.route('/cz')   # 常在 应用逻辑
+@app.route('/cz',methods=['GET','POST'])   # 常在 应用逻辑
 def cz():
     if request.method == 'POST' :
         return {"text":"Hello, everything fine,Good night. zzz"}
+    return {"text":"Hello, only Get get ,Good night. zzz"}    
 
 # 新闻类榜单
 

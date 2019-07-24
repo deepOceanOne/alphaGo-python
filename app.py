@@ -124,7 +124,7 @@ def words():
 @app.route('/cz')   # 常在 应用逻辑
 def cz():
     if request.method == 'POST' :
-        return str("Hello from far away.")
+        return {"text":"Hello, everything fine,Good night. zzz"}
 
 # 新闻类榜单
 

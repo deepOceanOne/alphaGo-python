@@ -23,6 +23,7 @@ from Bmob import BmobSDK,BmobModel
 from qiniu import Auth, put_file, etag, put_stream, put_data
 from qiniu import BucketManager
 import qiniu.config
+import json
 
 # define a Model 
 class New(BmobModel):

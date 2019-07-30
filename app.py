@@ -160,7 +160,7 @@ def check():
     price_max= query.first()  # 两分钟内最大值
     query.add_ascending('price')
     price_min= query.first()  # 两分钟内最小值
-    return (price_max - price_min)
+    return (price_max.get('price') - price_min.get('price'))
 
 # 新闻类榜单
 

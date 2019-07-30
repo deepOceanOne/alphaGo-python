@@ -155,7 +155,7 @@ def check():
     #query.limit(100)
     # query.descending('createdAt')
     # price_list = query.find()
-    query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(seconds=300)).strftime("%Y-%m-%d %H:%M"))
+    query.greater_than_or_equal_to('createdAt', (datetime.now()-datetime.timedelta(seconds=300)).strftime("%Y-%m-%d %H:%M"))
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')

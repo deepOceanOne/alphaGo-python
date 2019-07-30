@@ -160,7 +160,11 @@ def check():
     price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')
     price_min= query.first().get('price')  # 两分钟内最小值
-    return (price_max-price_min)
+    if((price_max-price_min)>5 || (price_max-price_min)<-5 )
+        return_val = "值得一买"
+    else
+        return_val = "不值一买"
+    return return_val
 
 # 新闻类榜单
 

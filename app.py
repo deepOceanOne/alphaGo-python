@@ -159,8 +159,8 @@ def check():
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')
-    price_min= query.first().get('price')  # 两分钟内最小值
-    return price_min
+    price_min= query.firprice_minst().get('price')  # 两分钟内最小值
+    return (price_max-price_min)
 
 # 新闻类榜单
 

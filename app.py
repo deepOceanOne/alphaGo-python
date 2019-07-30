@@ -155,15 +155,20 @@ def check():
     #query.limit(100)
     # query.descending('createdAt')
     # price_list = query.find()
-    # query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(seconds=120)).strftime("%Y-%m-%d %H:%M"))
+    query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(seconds=300)).strftime("%Y-%m-%d %H:%M"))
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')
     price_min= query.first().get('price')  # 两分钟内最小值
+    postdata={'payload':{"text":"值得一买"}}
     if((price_max-price_min)>5 or (price_max-price_min)<-5 ):
         return_val = "值得一买"
+        postdata={'payload':{"text":"5分钟级别，值得一买"}}
+        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=postdata)
     else:
         return_val = "不值一买"
+        postdata={'payload':{"text":"5分钟级别，不值一买"}}
+        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=postdata)
     return return_val
 
 # 新闻类榜单

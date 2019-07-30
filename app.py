@@ -142,7 +142,7 @@ def silver():
     nowPrice = loads['data']['quotes']['nowPrice']
     Silver = leancloud.Object.extend('silver')
     silver_object = Silver()
-    silver_object.set('price', nowPrice)
+    silver_object.set('price', int(nowPrice))
     silver_object.set('time', datetime.now())
     silver_object.save()
     return str(datetime.now())

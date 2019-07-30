@@ -144,7 +144,7 @@ def silver():
     silver_object = Silver()
     silver_object.set('price', nowPrice)
     silver_object.save()
-    return true
+    return str(datetime.now())
 
 # 新闻类榜单
 

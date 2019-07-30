@@ -157,10 +157,10 @@ def check():
     # price_list = query.find()
     # query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(seconds=120)).strftime("%Y-%m-%d %H:%M"))
     query.add_descending('price')
-    price_max= int(query.first().get('price'))  # 两分钟内最大值
+    price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')
-    price_min= int(query.first().get('price'))  # 两分钟内最小值
-    return (price_max - price_min)
+    price_min= query.first().get('price')  # 两分钟内最小值
+    return (int(price_max) - int(price_min))
 
 # 新闻类榜单
 

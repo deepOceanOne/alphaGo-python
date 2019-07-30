@@ -143,8 +143,24 @@ def silver():
     Silver = leancloud.Object.extend('silver')
     silver_object = Silver()
     silver_object.set('price', nowPrice)
+    silver_object.set('time', datetime.now())
     silver_object.save()
     return str(datetime.now())
+
+@app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
+def check():
+    Silver = leancloud.Object.extend('silver')
+    query = Silver.query
+    query.select('price')
+    #query.limit(100)
+    # query.descending('createdAt')
+    # price_list = query.find()
+    # query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(seconds=120)).strftime("%Y-%m-%d %H:%M"))
+    query.add_descending('price')
+    price_max= query.first()  # 两分钟内最大值
+    query.add_ascending('price')
+    price_min= query.first()  # 两分钟内最小值
+    return (price_max - price_min)
 
 # 新闻类榜单
 

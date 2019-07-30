@@ -24,13 +24,16 @@ from qiniu import Auth, put_file, etag, put_stream, put_data
 from qiniu import BucketManager
 import qiniu.config
 import json
+#add for silver price monitoring
+import leancloud 
 
 # define a Model 
 class New(BmobModel):
     title = '' # title 
 
 # setup BmobSDK
-BmobSDK.setup(os.environ['bmobappid'],os.environ['bmobappkey'])    
+BmobSDK.setup(os.environ['bmobappid'],os.environ['bmobappkey'])   
+leancloud.init(os.environ['bmobappid'],os.environ['bmobappkey']) 
 
 
 # end of Bmob thing 
@@ -129,6 +132,19 @@ def cz():
         r['text'] = "Hello, everything fine,Good night. zzz";
         return json.dumps(r,ensure_ascii=False)
     return json.dumps(r,ensure_ascii=False)  
+
+
+@app.route('/sliver',methods=['GET','POST'])   # 常在 应用逻辑
+def silver():
+    url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
+    myPage = requests.get(url)
+    loads = json.loads(myPage.text)
+    nowPrice = loads['data']['quotes']['nowPrice']
+    Silver = leancloud.Object.extend('silver')
+    silver_object = Silver()
+    silver_object.set('price', nowPrice)
+    silver_object.save()
+    return true
 
 # 新闻类榜单
 

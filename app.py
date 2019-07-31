@@ -160,6 +160,8 @@ def check():
     # price_list = query.find()
     if(min_level < 1):
         min_level = 5
+    else:
+        min_level = (int)min_level
     query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(seconds=min_level*60)))
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值

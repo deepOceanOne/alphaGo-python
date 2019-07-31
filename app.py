@@ -46,6 +46,13 @@ app = Flask(__name__)
 app.register_blueprint(todos_view, url_prefix='/todos')
 
 
+def str2int(s):
+    def fn(x,y):
+        return x*10+y
+    def char2num(s):
+        return {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9}[s]
+    return reduce(fn,map(char2num,s))
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -161,7 +168,7 @@ def check():
     if(min_level < 1):
         min_level = 5
     else:
-        min_level = (int)min_level
+        min_level = str2in(min_level)
     query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(seconds=min_level*60)))
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值

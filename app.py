@@ -169,7 +169,7 @@ def check():
         min_level = 5
     else:
         min_level = str2int(min_level)
-    query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(hours=7)))
+    query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(hours=6)))
     query.add_descending('price')
     price_list = query.find()
     price_max = price_list[0].get('price') # 两分钟内最大值

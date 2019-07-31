@@ -173,7 +173,7 @@ def check():
     query.add_descending('price')
     price_list = query.find()
     price_max = price_list[0].get('price') # 两分钟内最大值
-    price_max= price_list[len(price_list)-1].get('price')  # 两分钟内最小值
+    price_min= price_list[len(price_list)-1].get('price')  # 两分钟内最小值
     postdata={'payload':{"text":"值得一买"}}
     if((price_max-price_min)>5 or (price_max-price_min)<-5 ):
         return_val = "值得一买"

@@ -171,8 +171,9 @@ def check():
         min_level = str2int(min_level)
     query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(seconds=min_level*60)))
     query.add_descending('price')
-    price_max= query.first().get('price') # 两分钟内最大值
-    price_min= query.last().get('price')  # 两分钟内最小值
+    price_list = query.find()
+    price_max = price_list[0].get('price') # 两分钟内最大值
+    price_min= price_list[len(price_list)-1].get('price')  # 两分钟内最小值
     postdata={'payload':{"text":"值得一买"}}
     if((price_max-price_min)>5 or (price_max-price_min)<-5 ):
         return_val = "值得一买"

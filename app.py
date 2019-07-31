@@ -158,7 +158,9 @@ def check():
     #query.limit(100)
     # query.descending('createdAt')
     # price_list = query.find()
-    query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(seconds=300)))
+    if(min_level < 1):
+        min_level = 5
+    query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(seconds=min_level*60)))
     query.add_descending('price')
     price_max= query.first().get('price') # 两分钟内最大值
     query.add_ascending('price')

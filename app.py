@@ -173,7 +173,7 @@ def check():
     query.add_descending('price')
     price_list = query.find()
     price_max = price_list[0].get('price') # 两分钟内最大值
-    price_min= price_list[len(price_list)-1].get('price')  # 两分钟内最小值
+    price_max= price_list[len(price_list)-1].get('price')  # 两分钟内最小值
     postdata={'payload':{"text":"值得一买"}}
     if((price_max-price_min)>5 or (price_max-price_min)<-5 ):
         return_val = "值得一买"
@@ -183,7 +183,7 @@ def check():
         }
         r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=json.dumps(payloadData),headers=payloadHeader)
     else:
-        return_val = "不值一买"
+        return_val = "不值一买"+str(price_max)+str(price_min)
         # postdata={'payload':{"text":"5分钟级别，不值一买"}}
         # r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=postdata)
     return return_val

@@ -145,9 +145,9 @@ def silver():
     Silver = leancloud.Object.extend('silver')
     silver_object = Silver()
     silver_object.set('price', int(nowPrice))
-    silver_object.set('time', datetime.now())
+    silver_object.set('time', datetime.datetime.now())
     silver_object.save()
-    return str(datetime.datetime.now())
+    return str(datetime.datetime.now())+str(nowPrice)
 
 @app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
 def check():

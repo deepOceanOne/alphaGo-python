@@ -27,7 +27,7 @@ import json
 #add for silver price monitoring
 import leancloud 
 #add for sliver time calc
-from datetime import datetime,timedelta
+import datetime
 
 # define a Model 
 class New(BmobModel):
@@ -165,8 +165,11 @@ def check():
     postdata={'payload':{"text":"值得一买"}}
     if((price_max-price_min)>5 or (price_max-price_min)<-5 ):
         return_val = "值得一买"
-        postdata={'payload':{"text":"5分钟级别，值得一买"}}
-        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=postdata)
+        payloadData = {"text":"5分钟级别，值得一买"}
+        payloadHeader = {
+            'Content-Type': 'application/json',
+        }
+        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=json.dumps(payloadData),headers=payloadHeader)
     else:
         return_val = "不值一买"
         postdata={'payload':{"text":"5分钟级别，不值一买"}}

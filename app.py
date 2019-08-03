@@ -49,6 +49,10 @@ def str2int(s):
         return {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9}[s]
     return reduce(fn,map(char2num,s))
 
+def formpayload(content):
+    payloadData = {"text":content}
+    return payloadData
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -187,13 +191,18 @@ def check():
 # 新闻类榜单
 @app.route('/timedtodo',methods=['GET','POST'])   # 常在 应用逻辑
 def timedtodo():
+    payloadHeader = {
+        'Content-Type': 'application/json',
+    }
     TimedTodo = leancloud.Object.extend('timedTodo')
     query = Silver.query
     query.select('todo','delta')
     query.less_than_or_equal_to('time',datetime.datetime.now())
     todo_list = query.find()
     for todo in todo_list:
-
-
-
+        payloadData = todo.get('todo')
+        delta = todo.get('delta')
+        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/b3f05d53c4c5243bc77c3c4108fbc55e',data=json.dumps(payloadData),headers=payloadHeader)
+        todo.save(time = (datetime.datetime.now()+datetime.timedelta(hours = delta)))
+    return str(len(todo_list))
 

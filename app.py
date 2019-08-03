@@ -33,10 +33,6 @@ import datetime
 class New(BmobModel):
     title = '' # title 
 
-# setup BmobSDK
-BmobSDK.setup(os.environ['bmobappid'],os.environ['bmobappkey'])   
-leancloud.init(os.environ['bmobappid'],os.environ['bmobappkey']) 
-
 
 # end of Bmob thing 
 
@@ -62,6 +58,7 @@ def index():
 def time():
     return str(datetime.now())
 
+## 之前用于todaypro的新闻推送服务
 @app.route('/news')
 def news():
     url = "http://news.163.com/rank/"
@@ -188,6 +185,15 @@ def check():
     return return_val
 
 # 新闻类榜单
+@app.route('/timedtodo',methods=['GET','POST'])   # 常在 应用逻辑
+def timedtodo():
+    TimedTodo = leancloud.Object.extend('timedTodo')
+    query = Silver.query
+    query.select('todo','delta')
+    query.less_than_or_equal_to('time',datetime.datetime.now())
+    todo_list = query.find()
+    for todo in todo_list:
+
 
 
 

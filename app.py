@@ -195,7 +195,7 @@ def timedtodo():
         'Content-Type': 'application/json',
     }
     TimedTodo = leancloud.Object.extend('timedTodo')
-    query = Silver.query
+    query = TimedTodo.query
     query.select('todo','delta')
     query.less_than_or_equal_to('time',datetime.datetime.now())
     todo_list = query.find()

@@ -202,7 +202,8 @@ def timedtodo():
     for todo in todo_list:
         payloadData = todo.get('todo')
         delta = todo.get('delta')
+        delta_int = str2int(delta)
         r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/b3f05d53c4c5243bc77c3c4108fbc55e',data=json.dumps(payloadData),headers=payloadHeader)
-        todo.save(time = (datetime.datetime.now()+datetime.timedelta(hours = delta)))
+        todo.save(time = (datetime.datetime.now()+datetime.timedelta(hours = delta_int)))
     return str(len(todo_list))
 

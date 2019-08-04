@@ -60,7 +60,7 @@ def index():
 
 @app.route('/time')
 def time():
-    return str(datetime.now())
+    return str(datetime.datetime.now())
 
 ## 之前用于todaypro的新闻推送服务
 @app.route('/news')
@@ -97,7 +97,7 @@ def qiniu():
 		bucket_name = 'travel'
 		token = q.upload_token(bucket_name, key, 3600)
 		ret, info = put_file(token, key, './'+key)
-		return str(datetime.now())
+		return str(datetime.datetime.now())
 
 @app.route('/list')
 def list():

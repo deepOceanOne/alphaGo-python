@@ -159,6 +159,7 @@ def silver():
 
 @app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
 def check():
+    beary_check_url = os.environ['bearycheck']
     min_level = request.args.get('level')  # 描述分钟级别
     Silver = leancloud.Object.extend('silver')
     query = Silver.query
@@ -181,7 +182,7 @@ def check():
         payloadHeader = {
             'Content-Type': 'application/json',
         }
-        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/cce0949a2d6479498e212e07f3502b84',data=json.dumps(payloadData),headers=payloadHeader)
+        r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
     else:
         return_val = "不值一买"+str(price_max)+str(price_min)
         # postdata={'payload':{"text":"5分钟级别，不值一买"}}
@@ -191,6 +192,7 @@ def check():
 # 新闻类榜单
 @app.route('/timedtodo',methods=['GET','POST'])   # 常在 应用逻辑
 def timedtodo():
+    beary_todo_url = os.environ['bearytodo']
     payloadHeader = {
         'Content-Type': 'application/json',
     }
@@ -202,7 +204,7 @@ def timedtodo():
     for todo in todo_list:
         payloadData = formpayload(todo.get('todo'))
         delta = todo.get('delta')
-        r=requests.post('https://hook.bearychat.com/=bwHe6/incoming/b3f05d53c4c5243bc77c3c4108fbc55e',data=json.dumps(payloadData),headers=payloadHeader)
+        r=requests.post(beary_todo_url,data=json.dumps(payloadData),headers=payloadHeader)
         todo.set('time',(datetime.datetime.now()+datetime.timedelta(hours = delta)))
         todo.save()
     return str(len(todo_list))

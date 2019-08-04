@@ -205,7 +205,7 @@ def timedtodo():
         payloadData = formpayload(todo.get('todo'))
         delta = todo.get('delta')
         r=requests.post(beary_todo_url,data=json.dumps(payloadData),headers=payloadHeader)
-        todo.set('time',(datetime.datetime.now()+datetime.timedelta(hours = delta)))
+        todo.set('time',(datetime.datetime.now()+datetime.timedelta(days = delta)))
         todo.save()
     return str(len(todo_list))
 

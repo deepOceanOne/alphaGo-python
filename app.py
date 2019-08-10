@@ -149,6 +149,7 @@ def cz():
 
 @app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑
 def borrow():
+	beary_check_url = os.environ['bearycheck']
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
     myPage = requests.get(url)
     loads = json.loads(myPage.text)

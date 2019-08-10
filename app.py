@@ -148,7 +148,8 @@ def cz():
 def borrow():
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
     myPage = requests.get(url)
-    loads = json.loads(myPage.text)
+    loads = json.loads(myPage.text).encode('utf-8')
+    loads = json.loads(loads)
     top = loads['data']['quotes']['top']
     top_int = (float)top
     low = loads['data']['quotes']['low']

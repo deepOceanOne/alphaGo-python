@@ -150,11 +150,11 @@ def borrow():
     myPage = requests.get(url)
     loads = json.loads(myPage.text)
     top = loads['data']['quotes']['top']
-    top_int = (int)top
+    top_int = (float)top
     low = loads['data']['quotes']['low']
-    low_int = (int)low
+    low_int = (float)low
     nowPrice = loads['data']['quotes']['nowPrice']
-    nowPrice_int = (int)nowPrice
+    nowPrice_int = (float)nowPrice
     basePrice1 = 4153   # 30share
     basePrice2 = 4140   # 30share
     basePrice3 = 4023   # 83share

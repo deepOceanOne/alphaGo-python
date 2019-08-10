@@ -49,6 +49,9 @@ def str2int(s):
         return {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9}[s]
     return reduce(fn,map(char2num,s))
 
+def parseint(string):
+    return int(''.join([x for x in string if x.isdigit()]))
+
 def formpayload(content):
     payloadData = {"text":content}
     return payloadData
@@ -147,27 +150,29 @@ def cz():
 @app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑
 def borrow():
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
-    myPage = requests.get(url)
-    loads = json.loads(myPage.text).encode('utf-8')
-    loads = json.loads(loads)
-    top = loads['data']['quotes']['top']
-    top_int = (float)top
-    low = loads['data']['quotes']['low']
-    low_int = (float)low
-    nowPrice = loads['data']['quotes']['nowPrice']
-    nowPrice_int = (float)nowPrice
-    basePrice1 = 4153   # 30share
-    basePrice2 = 4140   # 30share
-    basePrice3 = 4023   # 83share
-    T1 = (nowPrice_int-basePrice1)/(top_int-low_int)
-    L1 = 1800000/(T1*basePrice1)
+	myPage = requests.get(url)
+	loads = json.loads(myPage.text)
+	last_close = loads['data']['quotes']['last_close']
+	last_close = parseint(last_close)
+	nowPrice = loads['data']['quotes']['nowPrice']
+	nowPrice = parseint(nowPrice)
+	basePrice1 = 4153   # 30share
+	basePrice2 = 4140   # 30share
+	basePrice3 = 4023   # 83share
+	T1 = (nowPrice-basePrice1)/(last_close-nowPrice)
+	L1 = 1800000/(T1*basePrice1)
+	T2 = (nowPrice-basePrice2)/(last_close-nowPrice)
+	L2 = 1800000/(T1*basePrice2)
+	T3 = (nowPrice-basePrice3)/(last_close-nowPrice)
+	L3 = 1800000/(T1*basePrice3)
     return_val = "实时结算：P1募集利率为—— "+str(L1)+"% 募集天数为—— "+str(T1)
+    return_val += "实时结算：P2募集利率为—— "+str(L2)+"% 募集天数为—— "+str(T2)
+    return_val += "实时结算：P3募集利率为—— "+str(L3)+"% 募集天数为—— "+str(T3)
     payloadData = {"text":return_val}
     payloadHeader = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
     }
     r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
-
     return str(datetime.datetime.now())+str(nowPrice)
 
 

@@ -33,7 +33,7 @@ class New(BmobModel):
     title = '' # title 
 
 # global 
-baseTime_borrow = datetime(2019,datetime.datetime.now().month,datetime.datetime.now().day+1,16,0,0)    # 用于borrow日期校准
+# baseTime_borrow = datetime(2019,datetime.datetime.now().month,datetime.datetime.now().day+1,16,0,0)    # 用于borrow日期校准
 
 # end of Bmob thing 
 
@@ -170,16 +170,11 @@ def borrow():
     return_val = "实时结算：P1募集利率为: "+str(L1)+"% 募集天数为: "+str(T1)
     return_val += "实时结算：P2募集利率为: "+str(L2)+"% 募集天数为: "+str(T2)
     return_val += "实时结算：P3募集利率为: "+str(L3)+"% 募集天数为: "+str(T3)  
-    timeNow = datetime.datetime.now()
-    if(timeNow-baseTime>0):
-        payloadData = {"text":return_val}
-        payloadHeader = {
-            'Content-Type': 'application/json'
-        }
-        r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
-        baseTime_borrow = datetime(2019,datetime.datetime.now().month,datetime.datetime.now().day+1,16,0,0)  # baseTime_borrow is global 
-    else:
-        nowPrice = 404
+    payloadData = {"text":return_val}
+    payloadHeader = {
+        'Content-Type': 'application/json'
+    }
+    r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
     return str(datetime.datetime.now())+str(nowPrice)
 
 

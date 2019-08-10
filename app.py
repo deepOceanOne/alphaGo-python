@@ -144,6 +144,29 @@ def cz():
     return json.dumps(r,ensure_ascii=False)  
 
 
+@app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑
+def borrow():
+    url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
+    myPage = requests.get(url)
+    loads = json.loads(myPage.text)
+    top = loads['data']['quotes']['top']
+    low = loads['data']['quotes']['low']
+    nowPrice = loads['data']['quotes']['nowPrice']
+    basePrice1 = 4153   # 30share
+    basePrice2 = 4140   # 30share
+    basePrice3 = 4023   # 83share
+    T1 = ((int)nowPrice-(int)basePrice1)/((int)top-(int)low)
+    L1 = 1800000/(T1*basePrice1)
+    return_val = "实时结算：P1募集利率为—— "+str(L1)+"% 募集天数为—— "+str(T1)
+    payloadData = {"text":return_val}
+    payloadHeader = {
+        'Content-Type': 'application/json',
+    }
+    r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
+
+    return str(datetime.datetime.now())+str(nowPrice)
+
+
 @app.route('/sliver',methods=['GET','POST'])   # 常在 应用逻辑
 def silver():
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"

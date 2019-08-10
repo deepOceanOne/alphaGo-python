@@ -26,8 +26,7 @@ import qiniu.config
 import json
 #add for silver price monitoring
 import leancloud 
-#add for sliver time calc
-import datetime
+
 
 # define a Model 
 class New(BmobModel):

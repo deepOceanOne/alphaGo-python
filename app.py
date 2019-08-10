@@ -150,7 +150,7 @@ def cz():
 @app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑
 def borrow():
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
-	myPage = requests.get(url)
+    myPage = requests.get(url)
 	loads = json.loads(myPage.text)
 	last_close = loads['data']['quotes']['last_close']
 	last_close = parseint(last_close)

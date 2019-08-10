@@ -155,7 +155,7 @@ def borrow():
     basePrice1 = 4153   # 30share
     basePrice2 = 4140   # 30share
     basePrice3 = 4023   # 83share
-    T1 = ((int)nowPrice-(int)basePrice1)/((int)top-(int)low)
+    T1 = (nowPrice-basePrice1)/(top-low)
     L1 = 1800000/(T1*basePrice1)
     return_val = "实时结算：P1募集利率为—— "+str(L1)+"% 募集天数为—— "+str(T1)
     payloadData = {"text":return_val}

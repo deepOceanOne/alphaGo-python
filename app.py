@@ -163,12 +163,12 @@ def borrow():
     T1 = (nowPrice-basePrice1)/(last_close-nowPrice)
     L1 = 1800000/(T1*basePrice1)
     T2 = (nowPrice-basePrice2)/(last_close-nowPrice)
-    L2 = 1800000/(T1*basePrice2)
+    L2 = 1800000/(T2*basePrice2)
     T3 = (nowPrice-basePrice3)/(last_close-nowPrice)
-    L3 = 1800000/(T1*basePrice3)
-    return_val = "实时结算：P1募集利率为—— "+str(L1)+"% 募集天数为—— "+str(T1)
-    return_val += "实时结算：P2募集利率为—— "+str(L2)+"% 募集天数为—— "+str(T2)
-    return_val += "实时结算：P3募集利率为—— "+str(L3)+"% 募集天数为—— "+str(T3)
+    L3 = 1800000/(T3*basePrice3)
+    return_val = "实时结算：P1募集利率为: "+str(L1)+"% 募集天数为: "+str(T1)
+    return_val += "实时结算：P2募集利率为: "+str(L2)+"% 募集天数为: "+str(T2)
+    return_val += "实时结算：P3募集利率为: "+str(L3)+"% 募集天数为: "+str(T3)
     payloadData = {"text":return_val}
     payloadHeader = {
         'Content-Type': 'application/json'

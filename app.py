@@ -151,20 +151,20 @@ def cz():
 def borrow():
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"
     myPage = requests.get(url)
-	loads = json.loads(myPage.text)
-	last_close = loads['data']['quotes']['last_close']
-	last_close = parseint(last_close)
-	nowPrice = loads['data']['quotes']['nowPrice']
-	nowPrice = parseint(nowPrice)
-	basePrice1 = 4153   # 30share
-	basePrice2 = 4140   # 30share
-	basePrice3 = 4023   # 83share
-	T1 = (nowPrice-basePrice1)/(last_close-nowPrice)
-	L1 = 1800000/(T1*basePrice1)
-	T2 = (nowPrice-basePrice2)/(last_close-nowPrice)
-	L2 = 1800000/(T1*basePrice2)
-	T3 = (nowPrice-basePrice3)/(last_close-nowPrice)
-	L3 = 1800000/(T1*basePrice3)
+    loads = json.loads(myPage.text)
+    last_close = loads['data']['quotes']['last_close']
+    last_close = parseint(last_close)
+    nowPrice = loads['data']['quotes']['nowPrice']
+    nowPrice = parseint(nowPrice)
+    basePrice1 = 4153   # 30share
+    basePrice2 = 4140   # 30share
+    basePrice3 = 4023   # 83share
+    T1 = (nowPrice-basePrice1)/(last_close-nowPrice)
+    L1 = 1800000/(T1*basePrice1)
+    T2 = (nowPrice-basePrice2)/(last_close-nowPrice)
+    L2 = 1800000/(T1*basePrice2)
+    T3 = (nowPrice-basePrice3)/(last_close-nowPrice)
+    L3 = 1800000/(T1*basePrice3)
     return_val = "实时结算：P1募集利率为—— "+str(L1)+"% 募集天数为—— "+str(T1)
     return_val += "实时结算：P2募集利率为—— "+str(L2)+"% 募集天数为—— "+str(T2)
     return_val += "实时结算：P3募集利率为—— "+str(L3)+"% 募集天数为—— "+str(T3)

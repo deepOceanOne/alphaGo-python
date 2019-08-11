@@ -26,6 +26,8 @@ import qiniu.config
 import json
 #add for silver price monitoring
 import leancloud 
+# 用于随机数产生
+import random
 
 
 # define a Model ,之前用于today新闻推送，现在已废弃
@@ -119,6 +121,35 @@ def qiniu_pic():
         return str(datetime.datetime.now())
 
 
+@app.route('/baby',methods=['GET','POST'])    # 文字解析和索引服务
+def baby():
+    beary_baby_url = os.environ['bearybaby']
+    babypicbase = os.environ['babypicbase']
+    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'21:30', '%Y-%m-%d%H:%M')
+    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'22:30', '%Y-%m-%d%H:%M')
+    n_time = datetime.datetime.now()
+    Baby = leancloud.Object.extend('baby')
+    query.select('addr')
+    count = query.count()
+    if count > 1 and n_time > d_time and n_time < d_time1:   #进行图片推送
+        first_result = query.first()
+        pic_addr = first_result.get('addr')
+        first_result.destroy()
+        payloadData = {"text":"每日一图","channel": "Baby","attachments": [{"images": [{"url":babypicbase+pic_addr}]}]}
+        payloadHeader = {
+            'Content-Type': 'application/json',
+        }
+        r=requests.post(beary_baby_url,data=json.dumps(payloadData),headers=payloadHeader)
+    else:
+        pass
+    return str(datetime.datetime.now())
+
+
+@app.route('/index',methods=['GET','POST'])    # 文字解析和索引服务
+def index():
+    return str(datetime.datetime.now())
+
+
 @app.route('/list')
 def list():
     q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
@@ -136,7 +167,8 @@ def list():
     return ret_str
 
 
-
+## 之前用于todaypro的新闻推送服务,已废弃
+'''
 @app.route('/words')
 def words():
     url = "https://api.guoch.xyz"
@@ -153,6 +185,7 @@ def words():
         piece.save()
         words.append(content)
     return render_template('news.html',news=words)
+'''
 
 
 @app.route('/cz',methods=['GET','POST'])   #  检查todo应用逻辑,定期推送

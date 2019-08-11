@@ -170,11 +170,17 @@ def borrow():
     return_val = "实时结算：P1募集利率为: "+str(L1)+"% 募集天数为: "+str(T1)
     return_val += "实时结算：P2募集利率为: "+str(L2)+"% 募集天数为: "+str(T2)
     return_val += "实时结算：P3募集利率为: "+str(L3)+"% 募集天数为: "+str(T3)  
-    payloadData = {"text":return_val}
-    payloadHeader = {
-        'Content-Type': 'application/json'
-    }
-    r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
+    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'8:30', '%Y-%m-%d%H:%M')
+    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'9:00', '%Y-%m-%d%H:%M')
+    n_time = datetime.datetime.now()
+    if n_time > d_time and n_time < d_time1:
+        payloadData = {"text":return_val}
+        payloadHeader = {
+            'Content-Type': 'application/json'
+        }
+        r=requests.post(beary_check_url,data=json.dumps(payloadData),headers=payloadHeader)
+    else:
+        pass
     return str(datetime.datetime.now())+str(nowPrice)
 
 

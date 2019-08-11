@@ -142,7 +142,7 @@ def words():
     return render_template('news.html',news=words)
 
 
-@app.route('/cz',methods=['GET','POST'])   #  检查todo应用逻辑
+@app.route('/cz',methods=['GET','POST'])   #  检查todo应用逻辑,定期推送
 def cz():
     beary_todo_url = os.environ['bearytodo']
     bmobak = os.environ['bmobak']
@@ -154,11 +154,17 @@ def cz():
         where = {"day":day_string},
         keys='content' # 表名 
         ).stringData # 输出string格式的内容
-    payloadData = {"text":find_content}
-    payloadHeader = {
-        'Content-Type': 'application/json',
-    }
-    r=requests.post(beary_todo_url,data=json.dumps(payloadData),headers=payloadHeader)
+    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'9:00', '%Y-%m-%d%H:%M')
+    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'9:30', '%Y-%m-%d%H:%M')
+    n_time = datetime.datetime.now()
+    if n_time > d_time and n_time < d_time1:
+        payloadData = {"text":find_content}
+        payloadHeader = {
+            'Content-Type': 'application/json',
+        }
+        r=requests.post(beary_todo_url,data=json.dumps(payloadData),headers=payloadHeader)
+    else:
+        pass
     return str(datetime.datetime.now())  
 
 

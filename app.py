@@ -107,7 +107,7 @@ def qiniu():
 		return str(datetime.datetime.now())
 
 @app.route('/qiniu_pic',methods=['GET','POST'])
-def qiniu():
+def qiniu_pic():
     if request.method == 'POST' :
         recordFile = request.files['file']
         key = request.form.get('filename')

@@ -18,7 +18,7 @@ import re
 import random
 from lxml import etree
 
-from Bmob import Bmob
+from Bmob import *
 # add for qiniu storage 
 from qiniu import Auth, put_file, etag, put_stream, put_data
 from qiniu import BucketManager
@@ -28,9 +28,11 @@ import json
 import leancloud 
 
 
-# define a Model 
+# define a Model ,之前用于today新闻推送，现在已废弃
+'''
 class New(BmobModel):
     title = '' # title 
+'''
 
 # global 
 # baseTime_borrow = datetime(2019,datetime.datetime.now().month,datetime.datetime.now().day+1,16,0,0)    # 用于borrow日期校准
@@ -66,7 +68,8 @@ def index():
 def time():
     return str(datetime.datetime.now())
 
-## 之前用于todaypro的新闻推送服务
+## 之前用于todaypro的新闻推送服务,已废弃
+'''
 @app.route('/news')
 def news():
     url = "http://news.163.com/rank/"
@@ -86,7 +89,7 @@ def news():
         piece = New(title=new)
         piece.save()
     return render_template('news.html',news=news)
-
+'''
 
 # 这里使用七牛云进行录音的保存，但是七牛云存在一个问题： 没有公共域名可用。
 # 上传资源的下载必须使用 api 获取， 七牛的 qshell 工具的 qshell get 下载
@@ -159,7 +162,7 @@ def cz():
     return str(datetime.datetime.now())  
 
 
-@app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑
+@app.route('/borrow',methods=['GET','POST'])   # 拟债券利率核算 应用逻辑
 def borrow():
     beary_check_url = os.environ['bearycheck']
     url = "https://official.gkoudai.com/officialNetworkApi/GetQuotesDetail?id=6"

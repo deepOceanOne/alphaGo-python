@@ -146,7 +146,7 @@ def baby():
 
 
 @app.route('/fulltext',methods=['GET','POST'])    # 文字解析和索引服务
-def index():
+def fulltext():
     return str(datetime.datetime.now())
 
 

@@ -129,6 +129,7 @@ def baby():
     d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'22:30', '%Y-%m-%d%H:%M')
     n_time = datetime.datetime.now()
     Baby = leancloud.Object.extend('baby')
+    query = Baby.query
     query.select('addr')
     count = query.count()
     if count > 1 and n_time > d_time and n_time < d_time1:   #进行图片推送

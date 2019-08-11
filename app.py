@@ -139,13 +139,24 @@ def words():
     return render_template('news.html',news=words)
 
 
-@app.route('/cz',methods=['GET','POST'])   # 常在 应用逻辑
+@app.route('/cz',methods=['GET','POST'])   #  检查todo应用逻辑
 def cz():
-    if request.method == 'POST' :
-        r = {}
-        r['text'] = "Hello, everything fine,Good night. zzz";
-        return json.dumps(r,ensure_ascii=False)
-    return json.dumps(r,ensure_ascii=False)  
+    beary_todo_url = os.environ['bearytodo']
+    bmobak = os.environ['bmobak']
+    bmobsk = os.environ['bmobsk']
+    b = Bmob(bmobak,bmobsk)
+    day_string = str(datetime.datetime.now().month)+'-'+str(datetime.datetime.now().day)
+    find_content = b.find( # 查找数据库
+        "today",
+        where = {"day":day_string},
+        keys='content' # 表名 
+        ).stringData # 输出string格式的内容
+    payloadData = {"text":find_content}
+    payloadHeader = {
+        'Content-Type': 'application/json',
+    }
+    r=requests.post(beary_todo_url,data=json.dumps(payloadData),headers=payloadHeader)
+    return str(datetime.datetime.now())  
 
 
 @app.route('/borrow',methods=['GET','POST'])   # 常在 应用逻辑

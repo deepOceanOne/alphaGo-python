@@ -125,8 +125,8 @@ def qiniu_pic():
 def baby():
     beary_baby_url = os.environ['bearybaby']
     babypicbase = os.environ['babypicbase']
-    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'21:30', '%Y-%m-%d%H:%M')
-    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'22:30', '%Y-%m-%d%H:%M')
+    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'11:30', '%Y-%m-%d%H:%M')
+    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'12:30', '%Y-%m-%d%H:%M')
     n_time = datetime.datetime.now()
     Baby = leancloud.Object.extend('baby')
     query = Baby.query

@@ -106,6 +106,19 @@ def qiniu():
 		ret, info = put_file(token, key, './'+key)
 		return str(datetime.datetime.now())
 
+@app.route('/qiniu_pic',methods=['GET','POST'])
+def qiniu():
+    if request.method == 'POST' :
+        recordFile = request.files['file']
+        key = request.form.get('filename')
+        recordFile.save(os.path.join('./',key)) 
+        q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])
+        bucket_name = 'pic'
+        token = q.upload_token(bucket_name, key, 3600)
+        ret, info = put_file(token, key, './'+key)
+        return str(datetime.datetime.now())
+
+
 @app.route('/list')
 def list():
     q = Auth(os.environ['qiniuak'], os.environ['qiniusk'])

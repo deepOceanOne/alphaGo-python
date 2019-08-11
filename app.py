@@ -18,7 +18,7 @@ import re
 import random
 from lxml import etree
 
-from Bmob import *
+from Bmob import Bmob
 # add for qiniu storage 
 from qiniu import Auth, put_file, etag, put_stream, put_data
 from qiniu import BucketManager

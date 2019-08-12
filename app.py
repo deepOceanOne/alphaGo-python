@@ -225,8 +225,8 @@ def borrow():
     last_close = parseint(last_close)
     nowPrice = loads['data']['quotes']['nowPrice']
     nowPrice = parseint(nowPrice)
-    basePrice1 = 4153   # 30share
-    basePrice2 = 4140   # 30share
+    basePrice1 = 4146   # 10share
+    basePrice2 = 4138   # 10share
     basePrice3 = 4023   # 83share
     T1 = (nowPrice-basePrice1)/(last_close-nowPrice)
     L1 = 1800000/(T1*basePrice1)

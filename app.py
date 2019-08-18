@@ -115,8 +115,8 @@ def qiniu():
 @app.route('/text',methods=['GET','POST'])
 def text():
     if request.method == 'POST' :
-        addr = request["data"]["addr"]
-        time = request["data"]["time"]
+        addr = request.form["addr"]
+        time = request.form["time"]
         XXQG = leancloud.Object.extend('xxqg')
         xxqg = XXQG()
         xxqg.set('time',time)

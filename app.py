@@ -108,6 +108,21 @@ def qiniu():
 		ret, info = put_file(token, key, './'+key)
 		return str(datetime.datetime.now())
 
+
+# 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。
+@app.route('/text',methods=['GET','POST'])
+def text():
+    if request.method == 'POST' :
+        addr = request.form.get('addr')
+        time = request.form.get('time')
+        XXQG = leancloud.Object.extend('xxqg')
+        xxqg = new XXQG()
+        xxqg.set('time',time)
+        xxqg.set('addr',addr)
+        xxqg.save()
+        return str(datetime.datetime.now())
+
+
 @app.route('/qiniu_pic',methods=['GET','POST'])
 def qiniu_pic():
     if request.method == 'POST' :

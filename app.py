@@ -128,6 +128,7 @@ def text():
  # 解析助手，百度云的文字识别。
 @app.route('/extract',methods=['GET','POST'])
 def extract():
+    beary_text_url = os.environ['bearytext']
     APP_ID = os.environ['baidu_id']
     API_KEY = os.environ['baidu_ak']
     SECRET_KEY = os.environ['baidu_sk']
@@ -137,13 +138,27 @@ def extract():
     options["detect_direction"] = "false"
     options["detect_language"] = "true"
     options["probability"] = "false"
-    url = 'http://file.alwayshere.top/2019/08/18/40b0294c403ccf1d806fd7851afe93bf.png'
-    text = client.basicGeneralUrl(url,options)
-    words_result = text["words_result"]
-    words_result_return = ''
-    for word in words_result:
-        words_result_return+=word["words"]
-    return words_result_return     
+    payloadHeader = {
+        'Content-Type': 'application/json',
+    }
+    #  查询最近产生的识别订单，进行集中统一识别
+    XXQG = leancloud.Object.extend('xxqg')
+    query = XXQG.query
+    query.select('addr')
+    query.greater_than_or_equal_to('createdAt', (datetime.datetime.now()-datetime.timedelta(minutes=7)))
+    xxqg_list = query.find()
+    for xxqg in xxqg_list:
+        url = xxqg.get('addr')
+        text = client.basicGeneralUrl(url,options)
+        words_result = text["words_result"]
+        words_result_return = ''
+        for word in words_result:
+            words_result_return+=word["words"]
+
+        payloadData = formpayload(words_result_return)
+        r=requests.post(beary_text_url,data=json.dumps(payloadData),headers=payloadHeader)
+        xxqg.destroy()
+    return str(datetime.datetime.now())     
 
 
 @app.route('/qiniu_pic',methods=['GET','POST'])

@@ -116,11 +116,17 @@ def text():
         addr = request.form.get('addr')
         time = request.form.get('time')
         XXQG = leancloud.Object.extend('xxqg')
-        xxqg = new XXQG()
+        xxqg = XXQG()
         xxqg.set('time',time)
         xxqg.set('addr',addr)
         xxqg.save()
         return str(datetime.datetime.now())
+
+
+ # 解析助手，百度云的文字识别。
+@app.route('/extract',methods=['GET','POST'])
+def extract():
+    return str(datetime.datetime.now())       
 
 
 @app.route('/qiniu_pic',methods=['GET','POST'])

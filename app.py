@@ -128,10 +128,22 @@ def text():
  # 解析助手，百度云的文字识别。
 @app.route('/extract',methods=['GET','POST'])
 def extract():
-    baidu_ak = os.environ['baidu_ak']
-    baidu_sk = os.environ['baidu_sk']
-
-    return str(datetime.datetime.now())       
+    APP_ID = os.environ['baidu_id']
+    API_KEY = os.environ['baidu_ak']
+    SECRET_KEY = os.environ['baidu_sk']
+    client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
+    options = {}
+    options["language_type"] = "CHN_ENG"
+    options["detect_direction"] = "false"
+    options["detect_language"] = "true"
+    options["probability"] = "false"
+    url = 'http://file.alwayshere.top/2019/08/18/40b0294c403ccf1d806fd7851afe93bf.png'
+    text = client.basicGeneralUrl(url,options)
+    words_result = text.words_result
+    words_result_return = ''
+    for word in words_result:
+        words_result_return+=word.words
+    return str(words_result_return)       
 
 
 @app.route('/qiniu_pic',methods=['GET','POST'])

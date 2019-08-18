@@ -1,7 +1,6 @@
 # coding: utf-8
 
 import datetime
-
 from flask import Flask
 from flask import render_template
 from flask_sockets import Sockets
@@ -28,6 +27,9 @@ import json
 import leancloud 
 # 用于随机数产生
 import random
+
+# 用于百度文字识别
+from aip import AipOcr
 
 
 # define a Model ,之前用于today新闻推送，现在已废弃
@@ -113,8 +115,8 @@ def qiniu():
 @app.route('/text',methods=['GET','POST'])
 def text():
     if request.method == 'POST' :
-        addr = request.form.get('addr')
-        time = request.form.get('time')
+        addr = request.data.addr
+        time = request.data.time
         XXQG = leancloud.Object.extend('xxqg')
         xxqg = XXQG()
         xxqg.set('time',time)
@@ -126,6 +128,9 @@ def text():
  # 解析助手，百度云的文字识别。
 @app.route('/extract',methods=['GET','POST'])
 def extract():
+    baidu_ak = os.environ['baidu_ak']
+    baidu_sk = os.environ['baidu_sk']
+
     return str(datetime.datetime.now())       
 
 

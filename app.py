@@ -139,7 +139,7 @@ def extract():
     options["probability"] = "false"
     url = 'http://file.alwayshere.top/2019/08/18/40b0294c403ccf1d806fd7851afe93bf.png'
     text = client.basicGeneralUrl(url,options)
-    words_result = text.words_result
+    words_result = text["words_result"]
     words_result_return = ''
     for word in words_result:
         words_result_return+=word.words

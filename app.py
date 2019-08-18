@@ -143,7 +143,7 @@ def extract():
     words_result_return = ''
     for word in words_result:
         words_result_return+=word["words"]
-    return str(words_result_return)       
+    return words_result_return     
 
 
 @app.route('/qiniu_pic',methods=['GET','POST'])

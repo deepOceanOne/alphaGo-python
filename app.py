@@ -142,7 +142,7 @@ def extract():
     words_result = text["words_result"]
     words_result_return = ''
     for word in words_result:
-        words_result_return+=word.words
+        words_result_return+=word["words"]
     return str(words_result_return)       
 
 

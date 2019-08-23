@@ -111,6 +111,18 @@ def qiniu():
 		return str(datetime.datetime.now())
 
 
+@app.route('/postwrite',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
+def postwrite():
+	if request.method == 'POST' :
+		text_content = request.form['text']
+		Writings = leancloud.Object.extend('Writings')
+		writing = Writings()
+		writing.set('content',text_content)
+		writing.save()
+		return str(datetime.datetime.now())
+
+
+
 # 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。
 @app.route('/text',methods=['GET','POST'])
 def text():

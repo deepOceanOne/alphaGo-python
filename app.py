@@ -123,10 +123,10 @@ def postwrite():
 						data[key[:-2]] = request.form.getlist(key)
 					else:
 						data[key] = value
-		text_content = data['content']
+		text_content = data['text']
 		Writings = leancloud.Object.extend('Writings')
 		writing = Writings()
-		writing.set('content',"有人来过")
+		writing.set('content',text_content)
 		writing.save()
 		return str(datetime.datetime.now())
 

@@ -172,7 +172,7 @@ def extract():
         url = xxqg.get('addr')
         text = client.basicGeneralUrl(url,options)
         words_result = text["words_result"]
-        words_result_return = ''
+        words_result_return = 'POST '
         for word in words_result:
             words_result_return+=word["words"]
         payloadData = formpayload(words_result_return)

@@ -114,8 +114,15 @@ def qiniu():
 @app.route('/postwrite',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
 def postwrite():
 	if request.method == 'POST' :
-		data = request.get_data()
-		data = json.loads(data)
+		if request.content_type.startswith('application/json'):
+	        data = request.get_data()
+	        data = json.loads(data)
+	    else:
+	        for key, value in request.form.items():
+	            if key.endswith('[]'):
+	                data[key[:-2]] = request.form.getlist(key)
+	            else:
+	                data[key] = value
 		text_content = data['content']
 		Writings = leancloud.Object.extend('Writings')
 		writing = Writings()

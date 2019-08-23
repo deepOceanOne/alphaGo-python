@@ -154,7 +154,6 @@ def extract():
         words_result_return = ''
         for word in words_result:
             words_result_return+=word["words"]
-
         payloadData = formpayload(words_result_return)
         r=requests.post(beary_text_url,data=json.dumps(payloadData),headers=payloadHeader)
         xxqg.destroy()

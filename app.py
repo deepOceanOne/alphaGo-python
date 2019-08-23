@@ -117,7 +117,7 @@ def postwrite():
 		text_content = request.form['text']
 		Writings = leancloud.Object.extend('Writings')
 		writing = Writings()
-		writing.set('content',text_content)
+		writing.set('content',"有人来过")
 		writing.save()
 		return str(datetime.datetime.now())
 

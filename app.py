@@ -30,6 +30,9 @@ import random
 
 # 用于百度文字识别
 from aip import AipOcr
+# 用于网页内容提取
+from goose3 import Goose 
+from goose3.text import StopWordsChinese
 
 
 # define a Model ,之前用于today新闻推送，现在已废弃
@@ -130,6 +133,32 @@ def postwrite():
 		writing.save()
 		return str(datetime.datetime.now())
 
+## 文章索引功能
+@app.route('/postread',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
+def postread():
+        if request.method == 'POST' :
+            if request.content_type.startswith('application/json'):
+                data = request.get_data()
+                data = json.loads(data)
+            else:
+                for key, value in request.form.items():
+                    if key.endswith('[]'):
+                        data[key[:-2]] = request.form.getlist(key)
+                    else:
+                        data[key] = value
+        text_content = data['text']
+        if text_content.startswith('http'):
+            url = text_content
+            g = Goose({'stopwords_class':StopWordsChinese})
+            article = g.extract(url=url)
+            text_content = article.cleaned_text
+            Readings = leancloud.Object.extend('Readings')
+            Reading = Readings()
+            Reading.set('content',text_content)
+            Reading.save()
+        else:
+            pass
+        return str(datetime.datetime.now())
 
 
 # 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。

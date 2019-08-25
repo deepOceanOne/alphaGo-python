@@ -130,7 +130,6 @@ def postwrite():
 @app.route('/postread',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
 def postread():
         if request.method == 'POST' :
-            data = {}
             if request.content_type.startswith('application/json'):
                 data = request.get_data()
                 data = json.loads(data)
@@ -140,8 +139,7 @@ def postread():
                         data[key[:-2]] = request.form.getlist(key)
                     else:
                         data[key] = value
-        text_content = data['text']
-        url = text_content
+        url = data['text']
         g = Goose({'stopwords_class':StopWordsChinese})
         article = g.extract(url=url)
         text_content = article.cleaned_text

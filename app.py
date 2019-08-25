@@ -146,7 +146,7 @@ def postread():
         text_content = article.title
         Readings = leancloud.Object.extend('Readings')
         Reading = Readings()
-        Reading.set('content',text_content)
+        Reading.set('content',url)
         Reading.save()
         return str(datetime.datetime.now())
 

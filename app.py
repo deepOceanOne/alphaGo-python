@@ -140,7 +140,7 @@ def postread():
                         data[key[:-2]] = request.form.getlist(key)
                     else:
                         data[key] = value
-        return_data = data
+        return_data = {}
         tmp_str = data['text']
         url = tmp_str.replace('http ','http')
         g = Goose({'stopwords_class':StopWordsChinese})

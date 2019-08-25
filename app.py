@@ -366,7 +366,7 @@ def silver():
 @app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
 def check():
     beary_check_url = os.environ['bearycheck']
-    min_level = int(request.form.get('level'))  # 描述分钟级别
+    min_level = request.form.get('level') # 描述分钟级别
     Silver = leancloud.Object.extend('silver')
     query = Silver.query
     query.select('price')

@@ -379,7 +379,7 @@ def check():
     #query.limit(100)
     # query.descending('createdAt')
     # price_list = query.find()
-    if(min_level < 1):
+    if((int)min_level < 1):
         min_level = 5
     else:
         min_level = str2int(min_level)

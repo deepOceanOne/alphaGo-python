@@ -130,7 +130,7 @@ def postwrite():
 @app.route('/postread',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
 def postread():
         if request.method == 'POST' :
-        data = {}
+            data = {}
             if request.content_type.startswith('application/json'):
                 data = request.get_data()
                 data = json.loads(data)

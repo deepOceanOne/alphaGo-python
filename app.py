@@ -366,13 +366,14 @@ def silver():
 @app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
 def check():
     beary_check_url = os.environ['bearycheck']
-    min_level = request.form.get('level') # 描述分钟级别
+    min_level = request.args.get('level') # 描述分钟级别
     Silver = leancloud.Object.extend('silver')
     query = Silver.query
     query.select('price')
     #query.limit(100)
     # query.descending('createdAt')
     # price_list = query.find()
+    min_level = parseint(min_level)
     if(min_level < 1):
         min_level = 5
     query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(minutes=min_level)))

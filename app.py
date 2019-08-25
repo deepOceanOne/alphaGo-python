@@ -31,8 +31,8 @@ import random
 # 用于百度文字识别
 from aip import AipOcr
 # 用于网页内容提取
-from goose import Goose 
-from goose.text import StopWordsChinese
+from goose3 import Goose 
+from goose3.text import StopWordsChinese
 
 
 # define a Model ,之前用于today新闻推送，现在已废弃

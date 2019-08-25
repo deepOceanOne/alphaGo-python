@@ -131,7 +131,7 @@ def postwrite():
 def postread():
         Readings = leancloud.Object.extend('Readings')
         Reading = Readings()
-        Reading.set('content',hello)
+        Reading.set('content','hello')
         Reading.save()
         '''
         if request.method == 'POST' :

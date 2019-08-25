@@ -155,7 +155,7 @@ def postread():
             Reading.save()
             # 增加返回确认内容功能
             return_data['text'] = text_content
-        return return_data
+        return json.dumps(return_data)
 
 
 # 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。

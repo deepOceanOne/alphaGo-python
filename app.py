@@ -140,16 +140,22 @@ def postread():
                         data[key[:-2]] = request.form.getlist(key)
                     else:
                         data[key] = value
+        return_data = data
         tmp_str = data['text']
         url = tmp_str.replace('http ','http')
         g = Goose({'stopwords_class':StopWordsChinese})
         article = g.extract(url=url)
         text_content = article.cleaned_text
-        Readings = leancloud.Object.extend('Readings')
-        Reading = Readings()
-        Reading.set('content',text_content)
-        Reading.save()
-        return str(datetime.datetime.now())
+        if len(text_content)==0 :
+            pass
+        else:
+            Readings = leancloud.Object.extend('Readings')
+            Reading = Readings()
+            Reading.set('content',text_content)
+            Reading.save()
+            # 增加返回确认内容功能
+            return_data['text'] = text_content
+        return return_data
 
 
 # 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。

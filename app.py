@@ -141,17 +141,14 @@ def postread():
                     else:
                         data[key] = value
         text_content = data['text']
-        if text_content.startswith('http'):
-            url = text_content
-            g = Goose({'stopwords_class':StopWordsChinese})
-            article = g.extract(url=url)
-            text_content = article.cleaned_text
-            Readings = leancloud.Object.extend('Readings')
-            Reading = Readings()
-            Reading.set('content',text_content)
-            Reading.save()
-        else:
-            pass
+        url = text_content
+        g = Goose({'stopwords_class':StopWordsChinese})
+        article = g.extract(url=url)
+        text_content = article.cleaned_text
+        Readings = leancloud.Object.extend('Readings')
+        Reading = Readings()
+        Reading.set('content',text_content)
+        Reading.save()
         return str(datetime.datetime.now())
 
 

@@ -129,6 +129,11 @@ def postwrite():
 ## 文章索引功能
 @app.route('/postread',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
 def postread():
+        Readings = leancloud.Object.extend('Readings')
+        Reading = Readings()
+        Reading.set('content',hello)
+        Reading.save()
+        '''
         if request.method == 'POST' :
             data = {}
             if request.content_type.startswith('application/json'):
@@ -148,6 +153,7 @@ def postread():
         Reading = Readings()
         Reading.set('content',url)
         Reading.save()
+        '''
         return str(datetime.datetime.now())
 
 

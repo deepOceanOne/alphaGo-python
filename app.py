@@ -52,13 +52,6 @@ app = Flask(__name__)
 app.register_blueprint(todos_view, url_prefix='/todos')
 
 
-def str2int(s):
-    def fn(x,y):
-        return x*10+y
-    def char2num(s):
-        return {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9}[s]
-    return reduce(fn,map(char2num,s))
-
 def parseint(string):
     return int(''.join([x for x in string if x.isdigit()]))
 
@@ -373,7 +366,7 @@ def silver():
 @app.route('/check',methods=['GET','POST'])   # 常在 应用逻辑
 def check():
     beary_check_url = os.environ['bearycheck']
-    min_level = int(request.args.get('level'))  # 描述分钟级别
+    min_level = int(request.form.get('level'))  # 描述分钟级别
     Silver = leancloud.Object.extend('silver')
     query = Silver.query
     query.select('price')

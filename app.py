@@ -143,7 +143,7 @@ def postread():
         url = data['text']
         g = Goose({'stopwords_class':StopWordsChinese})
         article = g.extract(url=url)
-        text_content = article.cleaned_text
+        text_content = article.title
         Readings = leancloud.Object.extend('Readings')
         Reading = Readings()
         Reading.set('content',text_content)

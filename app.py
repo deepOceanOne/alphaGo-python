@@ -140,21 +140,21 @@ def postread():
                         data[key[:-2]] = request.form.getlist(key)
                     else:
                         data[key] = value
-        return_data = {}
-        tmp_str = data['text']
-        url = tmp_str.replace('http ','http')
-        g = Goose({'stopwords_class':StopWordsChinese})
-        article = g.extract(url=url)
-        text_content = article.cleaned_text
-        if len(text_content)==0 :
-            pass
-        else:
-            Readings = leancloud.Object.extend('Readings')
-            Reading = Readings()
-            Reading.set('content',text_content)
-            Reading.save()
-            # 增加返回确认内容功能
-            return_data['text'] = text_content
+            return_data = {}
+            tmp_str = data['text']
+            url = tmp_str.replace('http ','http')
+            g = Goose({'stopwords_class':StopWordsChinese})
+            article = g.extract(url=url)
+            text_content = article.cleaned_text
+            if len(text_content)==0 :
+                return_data['text'] = '未获得内容'
+            else:
+                Readings = leancloud.Object.extend('Readings')
+                Reading = Readings()
+                Reading.set('content',text_content)
+                Reading.save()
+                # 增加返回确认内容功能
+                return_data['text'] = text_content
         return json.dumps(return_data)
 
 

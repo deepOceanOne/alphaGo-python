@@ -137,6 +137,7 @@ def postwrite():
 @app.route('/postread',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
 def postread():
         if request.method == 'POST' :
+            data = {}
             if request.content_type.startswith('application/json'):
                 data = request.get_data()
                 data = json.loads(data)
@@ -381,8 +382,6 @@ def check():
     # price_list = query.find()
     if(min_level < 1):
         min_level = 5
-    else:
-        min_level = str2int(min_level)
     query.greater_than_or_equal_to('time', (datetime.datetime.now()-datetime.timedelta(minutes=min_level)))
     query.add_descending('price')
     price_list = query.find()

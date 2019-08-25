@@ -11,7 +11,7 @@ from views.todos import todos_view
 
 import os
 import sys
-import urllib2
+from urllib.request import urlopen
 import requests
 import re
 import random

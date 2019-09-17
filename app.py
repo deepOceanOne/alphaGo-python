@@ -124,8 +124,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/time')
-def time():
+@app.route('/cur_time')
+def cur_time():
     return str(datetime.datetime.now())
 
 ## 之前用于todaypro的新闻推送服务,已废弃

@@ -30,6 +30,10 @@ import random
 
 # 用于百度文字识别
 from aip import AipOcr
+# 用于有道文字翻译
+import time
+import uuid
+import hashlib
 # 用于网页内容提取
 from goose3 import Goose 
 from goose3.text import StopWordsChinese

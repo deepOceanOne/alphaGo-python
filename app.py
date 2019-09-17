@@ -59,6 +59,62 @@ def formpayload(content):
     payloadData = {"text":content}
     return payloadData
 
+# 加入百度翻译的api，但是这是个python2版本，这里没法用，以后试试升级成python3版本，百度的API服务确实过于陈旧了
+def any2chn_baidu(_appid,_secretKey,_q):
+    appid = _appid #你的appid
+    secretKey = _secretKey #你的密钥
+    httpClient = None
+    myurl = '/api/trans/vip/translate'
+    q = _q
+    fromLang = 'auto'
+    toLang = 'zh'
+    salt = random.randint(32768, 65536)
+    sign = appid+q+str(salt)+secretKey
+    m1 = md5.new()
+    m1.update(sign)
+    sign = m1.hexdigest()
+    myurl = myurl+'?appid='+appid+'&q='+urllib.quote(q)+'&from='+fromLang+'&to='+toLang+'&salt='+str(salt)+'&sign='+sign
+    httpClient = httplib.HTTPConnection('api.fanyi.baidu.com')
+    httpClient.request('GET', myurl)
+    #response是HTTPResponse对象
+    response = httpClient.getresponse()
+    _response = response.read()
+    _response.decode('utf-8')
+    _json = json.loads(_response)
+    return _json['trans_result'][0]['dst'] 
+
+# 加入有道翻译的api
+def any2chn_youdao(_APP_KEY,_APP_SECRET,_q):
+    APP_KEY = _APP_KEY
+    APP_SECRET = _APP_SECRET
+    q = _q
+    data = {}
+    data['from'] = 'auto'
+    data['to'] = 'zh-CHS'
+    data['signType'] = 'v3'
+    curtime = str(int(time.time()))
+    data['curtime'] = curtime
+    salt = str(uuid.uuid1())
+    size = len(q)
+    q_truncate = ''
+    if size <= 20 :
+        q_truncate = q
+    else :
+        q_truncate = q[0:10] + str(size) + q[size - 10:size]
+    signStr = APP_KEY + q_truncate + salt + curtime + APP_SECRET
+    hash_algorithm = hashlib.sha256()
+    hash_algorithm.update(signStr.encode('utf-8'))
+    sign = hash_algorithm.hexdigest()
+    data['appKey'] = APP_KEY
+    data['q'] = q
+    data['salt'] = salt
+    data['sign'] = sign
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post('https://openapi.youdao.com/api', data=data, headers=headers)
+    _response = json.loads(response.content)
+    return str(_response['translation'])
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -158,6 +214,25 @@ def postread():
         return json.dumps(return_data)
 
 
+
+# 加入搜索功能
+@app.route('/postsearch',methods=['GET','POST'])   # 接收从倍洽外部post过来的消息，触发词为“POST”
+def postsearch():
+        if request.method == 'POST' :
+            if request.content_type.startswith('application/json'):
+                data = request.get_data()
+                data = json.loads(data)
+            else:
+                for key, value in request.form.items():
+                    if key.endswith('[]'):
+                        data[key[:-2]] = request.form.getlist(key)
+                    else:
+                        data[key] = value
+        return_data = {} 
+        return_data['text'] = text_content
+        return json.dumps(return_data)
+
+
 # 文字助手，增加一个图片解析文字的功能，使用 leancloud、bmob以及百度云的智能解析。
 @app.route('/text',methods=['GET','POST'])
 def text():
@@ -176,6 +251,8 @@ def text():
 @app.route('/extract',methods=['GET','POST'])
 def extract():
     beary_text_url = os.environ['bearytext']
+    YOUDAO_APP_KEY = os.environ['YOUDAO_APP_KEY']
+    YOUDAO_APP_SECRET = os.environ['YOUDAO_APP_SECRET']
     APP_ID = os.environ['baidu_id']
     API_KEY = os.environ['baidu_ak']
     SECRET_KEY = os.environ['baidu_sk']
@@ -198,9 +275,16 @@ def extract():
         url = xxqg.get('addr')
         text = client.basicGeneralUrl(url,options)
         words_result = text["words_result"]
-        words_result_return = 'POST '
+        words_result_return = ''
+        words_result_return_posfix = 'POST '
         for word in words_result:
-            words_result_return+=word["words"]
+            words_result_return+=word["words"]    
+        # 加入翻译内容,使用有道翻译引擎
+        if '的' in words_result_return:  # 基本可以判断这是一段中文内容
+            tmp_dump = 1
+        else :  #这段需要翻译一下
+            words_result_return = any2chn_youdao(YOUDAO_APP_KEY,YOUDAO_APP_SECRET,words_result_return)
+        words_result_return = words_result_return_posfix + words_result_return
         payloadData = formpayload(words_result_return)
         r=requests.post(beary_text_url,data=json.dumps(payloadData),headers=payloadHeader)
         xxqg.destroy()

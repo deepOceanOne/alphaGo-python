@@ -532,7 +532,7 @@ def dbook():
             "search_text": keyword,
             "cat": "1001"
         }
-        url = 'https://book.douban.com/subject_search?'
+        url = 'https://search.douban.com/book/subject_search?'
         response = requests.get(url, params=params)
         r = re.search('window.__DATA__ = "([^"]+)"', response.text).group(1)  # 加密的数据
         data = o_encrypt(r)

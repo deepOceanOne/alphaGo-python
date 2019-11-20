@@ -1,22 +1,18 @@
 # coding: utf-8
 
 import datetime
+import os
+import sys
+import requests
+import re
+from lxml import etree
 from flask import Flask
 from flask import render_template
 from flask_sockets import Sockets
 # add request 
 from flask import request
-
 from views.todos import todos_view
-
-import os
-import sys
 from urllib.request import urlopen
-import requests
-import re
-import random
-from lxml import etree
-
 from Bmob import *
 # add for qiniu storage 
 from qiniu import Auth, put_file, etag, put_stream, put_data
@@ -27,7 +23,6 @@ import json
 import leancloud 
 # 用于随机数产生
 import random
-
 # 用于百度文字识别
 from aip import AipOcr
 # 用于有道文字翻译
@@ -37,6 +32,13 @@ import hashlib
 # 用于网页内容提取
 from goose3 import Goose 
 from goose3.text import StopWordsChinese
+# 用于豆瓣读书
+import xxhash
+import base64
+import plistlib
+import struct
+from plistlib import FMT_BINARY, _BinaryPlistParser, _undefined
+from douban_utils import rc4
 
 
 # define a Model ,之前用于today新闻推送，现在已废弃
@@ -117,6 +119,20 @@ def any2chn_youdao(_APP_KEY,_APP_SECRET,_q):
     response = requests.post('https://openapi.youdao.com/api', data=data, headers=headers)
     _response = json.loads(response.content)
     return str(_response['translation'])
+
+def o_encrypt(_data):
+    a = base64.b64decode(_data)
+    i = 16
+    s = max((len(a) - 2 * i) // 3, 0)
+    u = a[s: s + i]
+    a = a[0: s] + a[s + i:]
+    sec_key = xxhash.xxh64_hexdigest(u, 41405)
+    print(sec_key)
+
+    text = rc4(a, sec_key)
+
+    r_data = plistlib.loads(text, fmt=FMT_BINARY)
+    return r_data
 
 
 @app.route('/')
@@ -505,3 +521,22 @@ def timedtodo():
         todo.save()
     return str(len(todo_list))
 
+
+# 豆瓣读书相关
+@app.route('/dbook',methods=['GET','POST'])   # 常在 应用逻辑
+def dbook():
+    return_str = '未发现模式'
+    if request.method == 'POST' :
+        keyword = request.form["keyword"]
+        params = {
+            "search_text": keyword,
+            "cat": "1001"
+        }
+        url = 'https://book.douban.com/subject_search?'
+        response = requests.get(url, params=params)
+        r = re.search('window.__DATA__ = "([^"]+)"', response.text).group(1)  # 加密的数据
+        data = o_encrypt(r)
+        for i in data:
+        if isinstance(i, dict):
+            return_str+=str(i)
+    return return_str

@@ -37,7 +37,7 @@ import xxhash
 import base64
 import plistlib
 import struct
-from plistlib import FMT_BINARY, _BinaryPlistParser, _undefined
+from plistlib import FMT_BINARY, _BinaryPlistParser
 from douban_utils import rc4
 
 

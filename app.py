@@ -537,6 +537,6 @@ def dbook():
         r = re.search('window.__DATA__ = "([^"]+)"', response.text).group(1)  # 加密的数据
         data = o_encrypt(r)
         for i in data:
-        if isinstance(i, dict):
-            return_str+=str(i)
+            if isinstance(i, dict):
+                return_str+=str(i)
     return return_str
